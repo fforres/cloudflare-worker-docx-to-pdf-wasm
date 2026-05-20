@@ -1,0 +1,21 @@
+[package]
+edition = "2024"
+rust-version = "1.93"
+name = "rdocx-pdf"
+version = "0.1.2"
+authors = ["Atul Sharma"]
+description = "PDF renderer for rdocx layout output (opt-4 patched: no raster/PNG)"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/tensorbee/rdocx"
+resolver = "2"
+
+[lib]
+name = "rdocx_pdf"
+path = "src/lib.rs"
+
+[dependencies]
+miniz_oxide = "0.8"
+pdf-writer = "0.14"
+rdocx-layout = "0.1.2"
+subsetter = "0.2"
+ttf-parser = "0.25"

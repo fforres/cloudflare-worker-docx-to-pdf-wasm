@@ -1,0 +1,1 @@
+This folder contains the built output assets for the worker "wasm-docx-to-pdf-opt2" generated at 2026-05-20T11:02:28.194Z.

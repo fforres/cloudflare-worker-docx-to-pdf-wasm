@@ -1,0 +1,16 @@
+{
+  "name": "worker",
+  "version": "1.0.0",
+  "description": "For local dev we import the four required fonts as bundled `Data` assets so no Cloudflare account is needed. In production you would store the same TTFs in an R2 bucket and fetch them lazily on the first request.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "wrangler": "^4.93.0"
+  }
+}

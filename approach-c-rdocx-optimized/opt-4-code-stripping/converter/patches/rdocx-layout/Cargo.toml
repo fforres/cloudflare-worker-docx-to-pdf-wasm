@@ -1,0 +1,27 @@
+[package]
+edition = "2024"
+rust-version = "1.93"
+name = "rdocx-layout"
+version = "0.1.2"
+authors = ["Atul Sharma"]
+description = "Layout engine for converting DOCX flow model to positioned frames (opt-4 patched)"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/tensorbee/rdocx"
+resolver = "2"
+
+[features]
+bundled-fonts = []
+
+[lib]
+name = "rdocx_layout"
+path = "src/lib.rs"
+
+[dependencies]
+# opt-4: drop fontdb's memmap2 + fontconfig-parser. Keep std + fs because
+# rdocx-layout::font calls `db.load_system_fonts()` which is fs-gated.
+fontdb = { version = "0.23", default-features = false, features = ["std", "fs"] }
+rdocx-oxml = "0.1.2"
+rustybuzz = "0.20"
+thiserror = "2"
+ttf-parser = "0.25"
+unicode-linebreak = "0.1"

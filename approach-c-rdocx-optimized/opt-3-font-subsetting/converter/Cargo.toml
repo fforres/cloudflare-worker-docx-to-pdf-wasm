@@ -1,0 +1,33 @@
+[package]
+name = "approach_c_rdocx_opt3"
+version = "0.1.0"
+edition = "2024"
+build = "build.rs"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[[bin]]
+name = "approach_c_rdocx_opt3"
+path = "src/bin.rs"
+required-features = ["native"]
+
+[dependencies]
+rdocx = "0.1.2"
+# bundled-fonts feature OFF; build.rs subsets the same TTFs into OUT_DIR
+# and src/lib.rs embeds them via include_bytes!, passing to to_pdf_with_fonts.
+rdocx-layout = { version = "0.1.2" }
+
+[patch.crates-io]
+rdocx-opc = { path = "patches/rdocx-opc" }
+
+[features]
+default = ["native"]
+native = []
+
+[profile.release]
+opt-level = "z"
+lto = "fat"
+codegen-units = 1
+panic = "unwind"
+strip = true

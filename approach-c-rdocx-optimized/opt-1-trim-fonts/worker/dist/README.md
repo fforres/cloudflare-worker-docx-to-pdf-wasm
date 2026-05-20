@@ -1,0 +1,1 @@
+This folder contains the built output assets for the worker "wasm-docx-to-pdf-opt-1-trim-fonts" generated at 2026-05-20T11:00:35.520Z.

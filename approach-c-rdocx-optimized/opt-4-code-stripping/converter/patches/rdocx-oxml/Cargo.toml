@@ -1,0 +1,19 @@
+[package]
+edition = "2024"
+rust-version = "1.93"
+name = "rdocx-oxml"
+version = "0.1.2"
+authors = ["Atul Sharma"]
+description = "WordprocessingML XML element types for OOXML (opt-4 patched: no regex)"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/tensorbee/rdocx"
+resolver = "2"
+
+[lib]
+name = "rdocx_oxml"
+path = "src/lib.rs"
+
+[dependencies]
+itoa = "1"
+quick-xml = "0.37"
+thiserror = "2"

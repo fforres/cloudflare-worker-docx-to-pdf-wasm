@@ -1,0 +1,39 @@
+[package]
+name = "approach_c_rdocx"
+version = "0.1.0"
+edition = "2024"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[[bin]]
+name = "approach_c_rdocx"
+path = "src/bin.rs"
+required-features = ["native"]
+
+[dependencies]
+rdocx = "0.1.2"
+
+[patch.crates-io]
+# opt-4 patches: strip regex/rdocx-html from rdocx, tiny-skia from rdocx-pdf,
+# regex from rdocx-oxml, and lean zip features in rdocx-opc.
+rdocx = { path = "patches/rdocx" }
+rdocx-pdf = { path = "patches/rdocx-pdf" }
+rdocx-oxml = { path = "patches/rdocx-oxml" }
+rdocx-opc = { path = "patches/rdocx-opc" }
+rdocx-layout = { path = "patches/rdocx-layout" }
+
+[features]
+default = ["native"]
+native = []
+# When this feature is on, bundle 4 fonts (Carlito Reg/Bold, Liberation
+# Serif Reg/Bold) into the WASM via include_bytes!. Off => no fonts, for
+# apples-to-apples size measurement vs the 0.65 MiB baseline.
+bundled-fonts-min = []
+
+[profile.release]
+opt-level = "z"
+lto = "fat"
+codegen-units = 1
+panic = "unwind"
+strip = "symbols"

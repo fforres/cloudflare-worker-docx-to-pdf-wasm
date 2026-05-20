@@ -1,0 +1,21 @@
+[package]
+edition = "2024"
+rust-version = "1.93"
+name = "rdocx"
+version = "0.1.2"
+authors = ["Atul Sharma"]
+description = "High-level API for reading, writing, and converting DOCX documents (opt-4 patched)"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/tensorbee/rdocx"
+resolver = "2"
+
+[lib]
+name = "rdocx"
+path = "src/lib.rs"
+
+[dependencies]
+rdocx-layout = "0.1.2"
+rdocx-opc = "0.1.2"
+rdocx-oxml = "0.1.2"
+rdocx-pdf = "0.1.2"
+thiserror = "2"

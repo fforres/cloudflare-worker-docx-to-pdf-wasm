@@ -1,0 +1,32 @@
+[package]
+name = "approach_c_rdocx_opt2"
+version = "0.1.0"
+edition = "2024"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+path = "src/lib.rs"
+
+[[bin]]
+name = "approach_c_rdocx_opt2"
+path = "src/bin.rs"
+required-features = ["native"]
+
+[dependencies]
+# NOTE: no `rdocx-layout` direct dep, no `bundled-fonts` feature.
+# All fonts are supplied at runtime by the caller via `convert_with_fonts`.
+rdocx = "0.1.2"
+
+[patch.crates-io]
+rdocx-opc = { path = "patches/rdocx-opc" }
+
+[features]
+default = ["native"]
+native = []
+
+[profile.release]
+opt-level = "z"
+lto = "fat"
+codegen-units = 1
+panic = "unwind"
+strip = true

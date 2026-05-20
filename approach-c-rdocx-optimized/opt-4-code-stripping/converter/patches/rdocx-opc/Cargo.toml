@@ -1,0 +1,25 @@
+[package]
+edition = "2024"
+rust-version = "1.93"
+name = "rdocx-opc"
+version = "0.1.2"
+authors = ["Atul Sharma"]
+description = "Open Packaging Convention (OPC) reader/writer for OOXML packages (opt-4 patched)"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/tensorbee/rdocx"
+resolver = "2"
+
+[lib]
+name = "rdocx_opc"
+path = "src/lib.rs"
+
+[dependencies]
+quick-xml = "0.37"
+thiserror = "2"
+# opt-4: use only the flate2-based DEFLATE decoder (no zopfli encoder,
+# no zlib-rs).
+zip = { version = "8.1", default-features = false, features = ["deflate-flate2"] }
+# zip pulls flate2 with default-features = false, so we have to pick a
+# backend ourselves. `rust_backend` => miniz_oxide (already in our graph
+# via rdocx-pdf), no C-deps, plays nice with wasm32-unknown-unknown.
+flate2 = { version = "1.1", default-features = false, features = ["rust_backend"] }

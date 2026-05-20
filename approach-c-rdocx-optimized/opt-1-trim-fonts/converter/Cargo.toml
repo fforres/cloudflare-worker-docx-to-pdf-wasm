@@ -1,0 +1,29 @@
+[package]
+name = "approach_c_rdocx"
+version = "0.1.0"
+edition = "2024"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[[bin]]
+name = "approach_c_rdocx"
+path = "src/bin.rs"
+required-features = ["native"]
+
+[dependencies]
+rdocx = "0.1.2"
+
+[patch.crates-io]
+rdocx-opc = { path = "patches/rdocx-opc" }
+
+[features]
+default = ["native"]
+native = []
+
+[profile.release]
+opt-level = "z"
+lto = "fat"
+codegen-units = 1
+panic = "unwind"
+strip = true

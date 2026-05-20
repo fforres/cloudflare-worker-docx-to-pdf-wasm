@@ -1,0 +1,16 @@
+name = "wasm-docx-to-pdf-opt-4-code-stripping"
+main = "src/worker.js"
+compatibility_date = "2025-01-01"
+
+# Bind the WASM module so wrangler bundles it with the script.
+[[rules]]
+type = "CompiledWasm"
+globs = ["**/*.wasm"]
+fallthrough = true
+
+[limits]
+cpu_ms = 30000
+
+[dev]
+port = 8791
+ip = "127.0.0.1"
