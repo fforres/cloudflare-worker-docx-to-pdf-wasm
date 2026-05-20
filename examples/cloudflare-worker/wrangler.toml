@@ -1,0 +1,17 @@
+name = "docx-to-pdf-worker"
+main = "src/worker.js"
+compatibility_date = "2025-01-01"
+find_additional_modules = true
+
+# Treat any imported .wasm as a CompiledWasm module. This matches
+# `import wasmModule from "docx-to-pdf-wasm/wasm";` in src/worker.js,
+# which resolves through the pnpm workspace link to
+# packages/docx-to-pdf-wasm/build/docx-to-pdf.wasm.
+[[rules]]
+type = "CompiledWasm"
+globs = ["**/*.wasm"]
+fallthrough = true
+
+# Default paid-plan CPU; bump to 300_000 for very large docs (5 min).
+[limits]
+cpu_ms = 30000

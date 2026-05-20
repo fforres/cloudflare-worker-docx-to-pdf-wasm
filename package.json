@@ -1,0 +1,18 @@
+{
+  "name": "wasm-docx-to-pdf",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Monorepo root for docx-to-pdf-wasm and its examples.",
+  "license": "MIT",
+  "scripts": {
+    "build": "pnpm --filter docx-to-pdf-wasm build",
+    "build:wasm": "pnpm --filter docx-to-pdf-wasm build:wasm"
+  },
+  "engines": {
+    "node": ">=18",
+    "pnpm": ">=9"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0"
+  }
+}

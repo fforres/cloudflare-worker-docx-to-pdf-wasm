@@ -1,1 +1,0 @@
-This folder contains the built output assets for the worker "wasm-docx-to-pdf-opt-3-font-subsetting" generated at 2026-05-20T11:03:28.554Z.

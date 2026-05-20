@@ -1,1 +1,0 @@
-This folder contains the built output assets for the worker "wasm-docx-to-pdf-opt-4-code-stripping" generated at 2026-05-20T11:14:25.683Z.

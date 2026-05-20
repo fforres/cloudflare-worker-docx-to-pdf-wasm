@@ -1,0 +1,49 @@
+{
+  "name": "docx-to-pdf-wasm",
+  "version": "0.1.0",
+  "description": "DOCX-to-PDF conversion compiled to WebAssembly. Runtime-agnostic — runs on Cloudflare Workers, Node.js, Bun, Deno, and modern browsers.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./build/index.js",
+  "module": "./build/index.js",
+  "types": "./build/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./build/index.d.ts",
+      "import": "./build/index.js",
+      "default": "./build/index.js"
+    },
+    "./wasm": "./build/docx-to-pdf.wasm",
+    "./docx-to-pdf.wasm": "./build/docx-to-pdf.wasm",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "build",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "bash scripts/build.sh",
+    "build:ts": "tsc",
+    "build:wasm": "bash scripts/build-wasm.sh"
+  },
+  "keywords": [
+    "docx",
+    "pdf",
+    "wasm",
+    "webassembly",
+    "ooxml",
+    "office",
+    "word",
+    "cloudflare-workers",
+    "edge"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0"
+  }
+}

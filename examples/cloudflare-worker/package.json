@@ -1,0 +1,21 @@
+{
+  "name": "cloudflare-worker-example",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Minimal Cloudflare Worker that consumes docx-to-pdf-wasm.",
+  "type": "module",
+  "scripts": {
+    "prepare": "node scripts/copy-wasm.mjs",
+    "predev": "node scripts/copy-wasm.mjs",
+    "predeploy": "node scripts/copy-wasm.mjs",
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "build": "node scripts/copy-wasm.mjs && wrangler deploy --dry-run --outdir=dist"
+  },
+  "dependencies": {
+    "docx-to-pdf-wasm": "workspace:*"
+  },
+  "devDependencies": {
+    "wrangler": "^4.93.0"
+  }
+}
