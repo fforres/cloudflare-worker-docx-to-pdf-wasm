@@ -1,0 +1,15 @@
+name = "wasm-docx-to-pdf-opt-6-subset-liberation"
+main = "src/worker.js"
+compatibility_date = "2025-01-01"
+
+[[rules]]
+type = "CompiledWasm"
+globs = ["**/*.wasm"]
+fallthrough = true
+
+[limits]
+cpu_ms = 30000
+
+[dev]
+port = 8793
+ip = "127.0.0.1"
