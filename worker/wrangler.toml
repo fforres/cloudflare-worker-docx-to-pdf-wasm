@@ -1,0 +1,13 @@
+name = "wasm-docx-to-pdf"
+main = "src/worker.js"
+compatibility_date = "2025-01-01"
+
+# Bind the WASM module so wrangler bundles it with the script.
+[[rules]]
+type = "CompiledWasm"
+globs = ["**/*.wasm"]
+fallthrough = true
+
+# Default paid-plan CPU; bump up to 300_000 for very large docs.
+[limits]
+cpu_ms = 30000

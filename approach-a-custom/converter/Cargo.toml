@@ -1,0 +1,31 @@
+[package]
+name = "approach-a-custom"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "approach_a_custom"
+path = "src/lib.rs"
+crate-type = ["rlib", "cdylib"]
+
+[[bin]]
+name = "approach-a-custom-cli"
+path = "src/bin/cli.rs"
+
+[dependencies]
+docx-rs = { version = "0.4.20", default-features = false }
+krilla = { version = "0.7.0", default-features = false }
+ttf-parser = { version = "0.25", default-features = false, features = ["std"] }
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+getrandom = { version = "0.2", features = ["custom"] }
+
+[profile.release]
+opt-level = "z"
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true
+
+[profile.release.package."*"]
+opt-level = "z"

@@ -1,0 +1,15 @@
+# Cargo
+target/
+**/target/
+
+# Node
+node_modules/
+worker/dist/
+worker/.wrangler/
+
+# OS
+.DS_Store
+
+# Editor
+.vscode/
+.idea/

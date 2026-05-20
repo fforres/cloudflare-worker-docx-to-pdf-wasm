@@ -1,0 +1,37 @@
+[package]
+name = "approach-b-converter"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[[bin]]
+name = "approach-b-converter"
+path = "src/main.rs"
+required-features = ["cli"]
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[features]
+default = ["cli"]
+cli = ["anyhow"]
+# Enables the upstream office2pdf wasm-bindgen exports
+# (convertDocxToPdf, convertToPdf, ...) when building for wasm32.
+wasm = ["office2pdf/wasm"]
+
+[dependencies]
+office2pdf = { version = "0.5.0", default-features = false }
+anyhow = { version = "1", optional = true }
+
+# Pull in the same upstream patches the office2pdf workspace uses, so we
+# match its parse tolerance for real-world DOCX files.
+[patch.crates-io]
+umya-spreadsheet = { git = "https://github.com/developer0hye/umya-spreadsheet.git", branch = "fix/panic-safety-v2" }
+docx-rs = { git = "https://github.com/developer0hye/docx-rs.git", branch = "fix/parse-tolerance" }
+
+[profile.release]
+opt-level = "z"
+lto = true
+codegen-units = 1
+strip = true
+panic = "abort"
