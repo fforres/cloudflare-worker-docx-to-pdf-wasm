@@ -2,6 +2,23 @@
 
 Two ways to ship this, depending on which example you want to base your worker on. Both are inside [`examples/`](./examples/).
 
+## One-click deploy
+
+The fastest path: click one of the buttons below. Cloudflare clones the repo, runs the worker's `[build] command` (worker-build for Rust, `predeploy` copy-wasm for JS), and gives you a deployed `*.workers.dev` URL.
+
+| Example | Stack | Deploy |
+|---|---|---|
+| Pure-Rust worker | `workers-rs` + opt-9a converter (one WASM, all in Rust) | [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/fforres/cloudflare-worker-docx-to-pdf-wasm/tree/main/examples/rust-worker) |
+| JS-shim worker | `docx-to-pdf-wasm` npm package imported from a JS Worker | [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/fforres/cloudflare-worker-docx-to-pdf-wasm/tree/main/examples/cloudflare-worker) |
+
+You'll still need a Cloudflare Workers Paid plan (free plan caps at 3 MiB bundle / 10 ms CPU — see [Prerequisites](#prerequisites)).
+
+The buttons point at subdirectories in this monorepo. Cloudflare clones the whole repo, then `cd`s into the worker's directory and runs the build. Both the pnpm workspace symlinks and the Cargo path deps resolve correctly from there.
+
+## Manual deploy (also documented below)
+
+For full control — pinning a CI/CD pipeline, deploying from a fork, or running in a non-CF environment — use the manual paths in **Option A** / **Option B** below.
+
 ## Prerequisites
 
 1. **Cloudflare account on a paid plan.** The free plan has a 3 MiB bundle limit and a 10 ms CPU limit; both workers ship at ~1 MiB and need CPU time well over 10 ms for non-trivial documents. The Workers Paid plan (\$5/month) gives you 10 MiB bundles and CPU up to 5 minutes.
@@ -27,7 +44,7 @@ What `deploy` does under the hood:
 
 You'll see something like:
 ```
-Total Upload: 2286 KiB / gzip: 1078 KiB
+Total Upload: 2308 KiB / gzip: 1090 KiB
 Uploaded docx-to-pdf-worker (1.23 sec)
 Deployed docx-to-pdf-worker triggers (0.45 sec)
   https://docx-to-pdf-worker.<your-subdomain>.workers.dev

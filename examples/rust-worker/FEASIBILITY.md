@@ -1,5 +1,14 @@
 # Phase 1 — Feasibility report: pure-Rust Cloudflare Worker
 
+> **Historical note.** This document was written at Phase 1 (2026-05-20) when
+> the converter library shipped only PDF output, before the opt-9a multi-format
+> rework and the post-audit security hardening. The conclusions still hold —
+> workers-rs imports a `wasm32-unknown-unknown` Rust library cleanly — but the
+> path-dep target is now `approach_c_rdocx_opt9a` (in
+> `research/02-optimizations/opt-9a-multi-format/converter/`), not `opt-8`. The
+> live `Cargo.toml` in this directory reflects the current target; the opt-8
+> references below are preserved as the original feasibility text.
+
 Date: 2026-05-20.
 Target: a workers-rs Worker that calls the existing `approach_c_rdocx_opt8`
 (rdocx-based) crate directly, compiled to a single WASM module that handles

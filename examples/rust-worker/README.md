@@ -93,7 +93,7 @@ crate being built.
 | Entry point       | `src/worker.js` (ES module) | `src/lib.rs` via `worker-build` shim |
 | HTTP routing      | JavaScript | Rust (`workers-rs`) |
 | WASM compile cost | Once per isolate (caller manages `WebAssembly.Module`) | Once per isolate (via `wasm-bindgen` glue) |
-| Bundle size (gz)  | 1.06 MiB | **1.05 MiB** |
+| Bundle size (gz)  | ~1.09 MiB (worker.js + WASM) | **~1.08 MiB** (worker-build shim + WASM) |
 | Cold start        | V8 compiles 2.2 MiB WASM (~30–80 ms) | V8 compiles 2.2 MiB WASM (~30–80 ms) + tiny shim |
 | Conversion latency on 670 KB DOCX | PDF 84 ms, HTML 18 ms, MD 14 ms | PDF 75 ms, HTML 16 ms, MD 13 ms |
 | Source maintenance | JS routing + Rust converter | Rust everything |

@@ -3,7 +3,12 @@
 ## Status
 **Shipped.** Pure-Rust Cloudflare Worker that mirrors the JS worker
 (`examples/cloudflare-worker/`) on every route and response shape, built via
-[`workers-rs`](https://github.com/cloudflare/workers-rs) 0.8.3.
+[`workers-rs`](https://github.com/cloudflare/workers-rs) 0.8.3 against the
+opt-9a converter crate (post-security-audit).
+
+> The bundle-size table below reflects the *current* multi-format,
+> security-hardened build. Earlier numbers (when this worker shipped the
+> opt-8 PDF-only converter) were ~1.03 MiB gz — see git history.
 
 ## Bundle size
 
@@ -12,12 +17,11 @@
 | Cargo release (`opt-level = "z"`, `lto = "fat"`, `codegen-units = 1`, `panic = "abort"`, `strip = true`) | 2.16 MiB raw |
 | After `wasm-bindgen` (worker-build) | 2.16 MiB raw |
 | After `wasm-opt -Oz` (worker-build) | 2.16 MiB raw |
-| **gzip -9** | **1.03 MiB** |
-| Wrangler `Total Upload` (incl. ~20 KB JS shim) | 2.18 MiB raw / ~1.05 MiB gz |
+| **Wrangler `Total Upload` (worker.wasm + shim, gzipped)** | **~1.08 MiB** |
 
 | Metric | JS worker | Rust worker (this) | Δ |
 |---|---|---|---|
-| Total upload (gzipped) | 1.06 MiB | **1.05 MiB** | −10 KB |
+| Total upload (gzipped) | ~1.09 MiB | **~1.08 MiB** | −10 KB |
 | WASM raw | 2.25 MiB | 2.16 MiB | −90 KB |
 | JS shim | 3 KB | 20 KB | +17 KB |
 

@@ -21,7 +21,7 @@ Runs anywhere modern WebAssembly does — **Cloudflare Workers, Node.js, Bun, De
 
 | Metric | Value |
 |---|---|
-| Compressed WASM bundle | **1.03 MiB gzipped** (8.97 MiB headroom under Cloudflare Workers' 10 MiB ceiling) |
+| Compressed WASM bundle | **1.04 MiB gzipped** (8.96 MiB headroom under Cloudflare Workers' 10 MiB ceiling) |
 | Toy-corpus recall (T1 / T2 / T3) | 1.00 / 0.99 / 0.89 |
 | Real-world-corpus recall (25 docs) | **0.98 avg** |
 | Conversion latency | ~50 ms for typical 1-page docs; 3.7 s for a 468-page NIST spec |
@@ -44,8 +44,8 @@ examples/
 research/                        # Everything we built and measured to get here.
   README.md                      # Index of the journey.
   01-approaches/                 # Approach A (custom), B (Typst), C (rdocx) side-by-side.
-  02-optimizations/              # opt-1 … opt-8 — size + correctness variants on C.
-                                 # opt-8 is what the package ships.
+  02-optimizations/              # opt-1 … opt-9a — size + correctness + multi-format variants on C.
+                                 # opt-9a (security-hardened) is what the package ships.
   03-real-world-testing/         # Stress test on 25 real DOCX files; comparison vs all approaches.
   04-found-issues/               # Outstanding upstream bugs + workarounds we shipped.
   fixtures/                      # Toy + real-world test corpus.

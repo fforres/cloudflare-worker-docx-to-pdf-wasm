@@ -4,12 +4,34 @@ name = "docx-to-pdf-rust-worker"
 main = "build/worker/shim.mjs"
 compatibility_date = "2025-01-01"
 
-# Invoke worker-build for every wrangler dev / deploy.
-# --panic-unwind so trapped panics surface as JS exceptions instead of taking
-# down the isolate (the opt-8 crate also uses panic = "unwind").
+# Invoke worker-build for every wrangler dev / deploy. The worker depends on
+# the opt-9a converter crate (via [dependencies] in Cargo.toml); worker-build
+# applies this binary crate's `panic = "abort"` profile, so the final WASM is
+# abort-on-panic. ConvertError variants from the converter come back as
+# Err(_) and become HTTP 422; a genuine runtime trap is serialised by
+# workers-rs's #[event(fetch)] macro into a JS exception at the isolate
+# boundary, so the isolate stays healthy across requests.
 [build]
 command = "cargo install -q worker-build --version ^0.8 --locked && worker-build --release"
 
 # Mirror the JS worker's paid-plan CPU budget so long documents have headroom.
 [limits]
 cpu_ms = 30000
+
+# Workers Observability — logs + invocation traces, 100 % head sampling.
+# Captures every request's invocation event (method, path, status, CPU time,
+# duration, colo, etc.) and every `console.log` line the worker emits.
+# Visible via `wrangler tail` and the Cloudflare dashboard's
+# Workers → docx-to-pdf-rust-worker → Logs tab.
+[observability]
+enabled = true
+head_sampling_rate = 1
+
+# Subblocks let us be explicit even though both inherit head_sampling_rate.
+[observability.logs]
+enabled = true
+head_sampling_rate = 1
+invocation_logs = true
+
+[observability.traces]
+enabled = true

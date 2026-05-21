@@ -9,6 +9,11 @@
 //!   POST /convert/html      → 200 text/html; charset=utf-8
 //!   POST /convert/markdown  → 200 text/markdown; charset=utf-8
 //!   *                       → 404
+//!
+//! Observability: enabled in `wrangler.toml` under `[observability]` at 100%
+//! head sampling. Cloudflare Workers Logs captures every invocation
+//! automatically (method, path, status, CPU time, duration, colo) — no
+//! application-side instrumentation needed for the standard request fields.
 
 use approach_c_rdocx_opt9a::{
     convert_to_html, convert_to_markdown, convert_to_pdf, ConvertError,
