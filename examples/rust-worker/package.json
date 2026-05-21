@@ -1,0 +1,15 @@
+{
+  "name": "rust-worker-example",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Pure-Rust Cloudflare Worker that compiles the DOCX->PDF converter and the HTTP router into a single WASM module via workers-rs.",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev --port 8793 --ip 127.0.0.1",
+    "deploy": "wrangler deploy",
+    "build": "wrangler deploy --dry-run --outdir=dist"
+  },
+  "devDependencies": {
+    "wrangler": "^4.93.0"
+  }
+}

@@ -1,0 +1,35 @@
+[package]
+name = "docx-to-pdf-rust-worker"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+worker = "0.8"
+worker-macros = "0.8"
+# The opt-9a (multi-format rdocx-based) DOCX → PDF/HTML/Markdown library.
+# We disable its `native` default feature so the [[bin]] target (which the
+# library exposes for host-only CLI usage) isn't pulled in when compiling for
+# wasm32-unknown-unknown.
+approach_c_rdocx_opt9a = { path = "../../research/02-optimizations/opt-9a-multi-format/converter", default-features = false }
+
+[patch.crates-io]
+# Cargo only honors [patch] tables on the binary crate being built, so this
+# vendor patch — which the library also declares — must be repeated here.
+rdocx-opc = { path = "../../research/02-optimizations/opt-9a-multi-format/converter/patches/rdocx-opc" }
+
+[profile.release]
+opt-level = "z"
+lto = "fat"
+codegen-units = 1
+# panic = "abort" is the workers-rs default. We deliberately diverge from
+# the library's `panic = "unwind"` here because wasm-bindgen 0.2.121 requires
+# the externref reference-types table for catch-wrapper generation, and
+# enabling unwind triggers that pathway. Conversion errors still come back as
+# Err(ConvertError) (the common case); a true runtime trap surfaces as a JS
+# exception at the isolate boundary via the #[event(fetch)] macro.
+panic = "abort"
+strip = true

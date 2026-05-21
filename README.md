@@ -7,15 +7,14 @@
 > See [`research/`](research/) for the full story.
 
 
-Convert Microsoft Word documents (`.docx`) to PDF inside a WebAssembly module.
+Convert Microsoft Word documents (`.docx`) to **PDF / HTML / Markdown** inside a WebAssembly module.
 
 Runs anywhere modern WebAssembly does — **Cloudflare Workers, Node.js, Bun, Deno, browsers** — with **no JavaScript-runtime dependencies**, **no LibreOffice**, **no headless browser**.
 
 ```text
-.docx bytes  ─►  docx-to-pdf-wasm  ─►  .pdf bytes
-                   ~2.3 MiB raw
-                   ~1.0 MiB gzipped
-                   ~50–200 ms per typical document
+                                ┌─►  .pdf bytes     ~80 ms typical
+.docx bytes  ─►  WASM (1 MiB)   ├─►  HTML string    ~15 ms typical
+                                └─►  Markdown       ~10 ms typical
 ```
 
 ## Status
@@ -38,8 +37,10 @@ packages/
                                  # Runtime-agnostic — exports a `convert(module, bytes)` function.
                                  # Ships the compiled WASM in build/.
 examples/
-  cloudflare-worker/             # Minimal Cloudflare Worker consuming the package.
-                                 # POST /convert with a .docx body → PDF.
+  cloudflare-worker/             # JS Cloudflare Worker consuming the package.
+                                 # POST /convert{,/html,/markdown}.
+  rust-worker/                   # Pure-Rust Cloudflare Worker via workers-rs.
+                                 # Same routes; entire worker compiled to one WASM.
 research/                        # Everything we built and measured to get here.
   README.md                      # Index of the journey.
   01-approaches/                 # Approach A (custom), B (Typst), C (rdocx) side-by-side.
@@ -66,7 +67,11 @@ pnpm add docx-to-pdf-wasm
 ```
 
 ```ts
-import { convert } from "docx-to-pdf-wasm";
+import {
+  convertToPdf,
+  convertToHtml,
+  convertToMarkdown,
+} from "docx-to-pdf-wasm";
 
 // Get the compiled WebAssembly.Module however your runtime allows:
 // - Cloudflare Workers: import wasmModule from "docx-to-pdf-wasm/wasm";
@@ -74,19 +79,31 @@ import { convert } from "docx-to-pdf-wasm";
 // - Browser: const wasmModule = await WebAssembly.compileStreaming(fetch(...));
 
 const docxBytes: Uint8Array = /* … */;
-const pdfBytes: Uint8Array = await convert(wasmModule, docxBytes);
+const pdf:  Uint8Array = await convertToPdf(wasmModule, docxBytes);
+const html: string     = await convertToHtml(wasmModule, docxBytes);
+const md:   string     = await convertToMarkdown(wasmModule, docxBytes);
 ```
 
 See [`packages/docx-to-pdf-wasm/README.md`](packages/docx-to-pdf-wasm/README.md) for runtime-specific recipes.
 
-### Run the example Worker locally
+### Run an example Worker locally
 
 ```bash
 pnpm install
-pnpm --filter cloudflare-worker-example dev
+
+# JS-shim worker (imports the package's WASM from JS):
+pnpm --filter cloudflare-worker-example dev   # port 8787
+
+# Pure-Rust worker (entire worker compiled to WASM via workers-rs):
+cd examples/rust-worker && pnpm exec wrangler dev --port 8793
+
 # In another shell:
-curl -X POST --data-binary @some.docx -o out.pdf http://127.0.0.1:8787/convert
+curl -X POST --data-binary @some.docx -o out.pdf   http://127.0.0.1:8787/convert
+curl -X POST --data-binary @some.docx -o out.html  http://127.0.0.1:8787/convert/html
+curl -X POST --data-binary @some.docx -o out.md    http://127.0.0.1:8787/convert/markdown
 ```
+
+Both workers serve the same routes with the same response shapes. See [`examples/rust-worker/RESULTS.md`](examples/rust-worker/RESULTS.md) for a side-by-side comparison.
 
 ## What this does well
 

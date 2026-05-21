@@ -5,17 +5,27 @@ Minimal Cloudflare Worker that consumes the [`docx-to-pdf-wasm`](../../packages/
 ## API surface
 
 ```
-POST /convert         body: raw DOCX bytes          → 200 application/pdf
-GET  /  GET /health   → 200 text/plain banner
-*                     → 404
+POST /convert            DOCX body → application/pdf
+POST /convert/html       DOCX body → text/html; charset=utf-8
+POST /convert/markdown   DOCX body → text/markdown; charset=utf-8
+GET  /  GET /health      → 200 text/plain banner
+*                        → 404
 ```
 
-Returns:
-- `200` with `application/pdf` on success
+Status codes:
+- `200` on success
 - `400` for empty body
-- `405` for non-POST on `/convert`
+- `405` for non-POST on a `/convert*` path
 - `422` for a converter error (malformed DOCX, unsupported document)
 - `500` for unexpected errors
+
+Local-dev latencies on a typical 670 KB DOCX (warm isolate):
+
+| Endpoint | Bytes out | Time |
+|---|---|---|
+| `/convert` | 82 KB PDF | ~80 ms |
+| `/convert/html` | 66 KB HTML | ~15 ms |
+| `/convert/markdown` | 17 KB MD | ~10 ms |
 
 ## Layout
 
@@ -50,8 +60,9 @@ pnpm --filter cloudflare-worker-example dev
 In another shell:
 
 ```bash
-curl -X POST --data-binary @path/to/some.docx \
-  -o out.pdf http://127.0.0.1:8787/convert
+curl -X POST --data-binary @path/to/some.docx -o out.pdf  http://127.0.0.1:8787/convert
+curl -X POST --data-binary @path/to/some.docx -o out.html http://127.0.0.1:8787/convert/html
+curl -X POST --data-binary @path/to/some.docx -o out.md   http://127.0.0.1:8787/convert/markdown
 ```
 
 ## Deploy

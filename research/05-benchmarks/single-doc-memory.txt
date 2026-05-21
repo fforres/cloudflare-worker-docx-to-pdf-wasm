@@ -1,0 +1,32 @@
+docx-to-pdf-wasm — single-document memory footprint
+wasm: 2.25 MB raw / 1.06 MB gzipped
+
+doc	in_KB	fmt	out_KB	ms	linear_MB	rss_baseline_MB	rss_peak_MB	rss_delta_MB
+tier1/test.docx	31	pdf	7	15	10.31	59.02	59.02	0
+tier1/test.docx	31	html	1	1	2.31	95.7	95.7	0
+tier1/test.docx	31	markdown	0	1	2.31	110.14	110.14	0
+
+tier2/SampleDoc.docx	11	pdf	9	3	10.13	112.02	112.02	0
+tier2/SampleDoc.docx	11	html	1	1	2.13	112.38	112.38	0
+tier2/SampleDoc.docx	11	markdown	0	1	2.13	112.45	112.45	0
+
+tier3/having-images.docx	130	pdf	186	11	10.63	112.47	112.47	0
+tier3/having-images.docx	130	html	189	2	3.56	112.81	112.81	0
+tier3/having-images.docx	130	markdown	0	1	2.63	114.19	114.19	0
+
+complex/edu_mtu_thesis.docx	897	pdf	851	102	30.75	114.05	114.05	0
+complex/edu_mtu_thesis.docx	897	html	1157	10	14.81	132.59	132.59	0
+complex/edu_mtu_thesis.docx	897	markdown	20	5	8.19	136.42	136.42	0
+
+complex/nasa_report_bianco.docx	1556	pdf	1465	180	44.19	136.56	136.56	0
+complex/nasa_report_bianco.docx	1556	html	2035	13	21.75	136.8	136.8	0
+complex/nasa_report_bianco.docx	1556	markdown	30	5	10.56	142.86	142.86	0
+
+complex/nasa_sewp_rfp.docx	444	pdf	1364	637	107	143.64	143.64	0
+complex/nasa_sewp_rfp.docx	444	html	781	51	46.63	144.11	144.11	0
+complex/nasa_sewp_rfp.docx	444	markdown	506	49	44.56	145.77	145.77	0
+
+complex/nist_sp800_53.docx	2017	pdf	3589	3015	403.81	147.36	147.36	0
+complex/nist_sp800_53.docx	2017	html	6000	584	238.81	151.38	151.38	0
+complex/nist_sp800_53.docx	2017	markdown	1377	541	215.31	169.39	169.39	0
+

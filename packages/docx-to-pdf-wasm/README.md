@@ -2,12 +2,14 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 
-Convert Microsoft Word documents (`.docx`) to PDF inside a WebAssembly module. **Runtime-agnostic** — runs on Cloudflare Workers, Node.js, Bun, Deno, and modern browsers with the same API.
+Convert Microsoft Word documents (`.docx`) to **PDF / HTML / Markdown** inside a WebAssembly module. **Runtime-agnostic** — runs on Cloudflare Workers, Node.js, Bun, Deno, and modern browsers with the same API.
 
 ```text
-.docx bytes  ─►  docx-to-pdf-wasm  ─►  .pdf bytes
-                  1.03 MiB gzipped
-                  ~50–200 ms typical
+                        ┌─►  .pdf bytes        ~80 ms typical
+.docx bytes  ─►  WASM   ├─►  HTML string       ~15 ms typical
+                        └─►  Markdown string   ~10 ms typical
+
+       1.04 MiB gzipped — all three formats from one binary
 ```
 
 ## Install
@@ -22,33 +24,66 @@ yarn add docx-to-pdf-wasm
 
 ## API
 
-The package exports two functions and a `WebAssembly.Module` artifact:
-
 ```ts
 import {
-  convert,             // high-level: instantiate + convert per call
-  convertWithInstance, // low-level: bring your own pre-instantiated instance
-  instantiate,         // helper: WebAssembly.instantiate with the right imports
-  ConvertError,        // thrown when the WASM converter returns an error
+  // High-level (recommended) — instantiate + convert per call:
+  convert,                    // alias for convertToPdf, kept for back-compat
+  convertToPdf,               // → Uint8Array (PDF bytes)
+  convertToHtml,              // → string  (UTF-8 HTML document)
+  convertToHtmlBytes,         // → Uint8Array (HTML, raw UTF-8 bytes)
+  convertToMarkdown,          // → string  (UTF-8 Markdown / CommonMark + GFM)
+  convertToMarkdownBytes,     // → Uint8Array (MD, raw UTF-8 bytes)
+  convertTo,                  // (module, docx, "pdf" | "html" | "markdown") → Uint8Array
+  // Low-level (advanced) — bring your own pre-instantiated instance:
+  convertWithInstance,
+  convertHtmlWithInstance,
+  convertMarkdownWithInstance,
+  instantiate,                // helper: WebAssembly.instantiate with the right imports
+  // Errors / types
+  ConvertError,
 } from "docx-to-pdf-wasm";
 
-// Also exported as a separate entry point:
-//   "docx-to-pdf-wasm/wasm" → the precompiled WASM binary
+// Separate entry point exposing the precompiled WASM binary:
+//   "docx-to-pdf-wasm/wasm"
 ```
 
-### `convert(module, docx)` — recommended
+### `convertToPdf(module, docx)` — primary use case
 
 ```ts
-const pdf: Uint8Array = await convert(wasmModule, docxBytes);
+const pdf: Uint8Array = await convertToPdf(wasmModule, docxBytes);
 ```
 
 Instantiates a fresh `WebAssembly.Instance` per call. Recommended for serverless / per-request contexts: pathological inputs that trap inside the converter can't poison the next request's memory. The expensive part — compiling the `WebAssembly.Module` — happens once and is cached by V8.
 
-### `convertWithInstance(instance, docx)` — advanced
+### `convertToHtml(module, docx)` and `convertToMarkdown(module, docx)`
+
+```ts
+const html: string = await convertToHtml(wasmModule, docxBytes);
+const md:   string = await convertToMarkdown(wasmModule, docxBytes);
+```
+
+HTML output is a full `<!DOCTYPE html>` document, UTF-8. Markdown is CommonMark with GFM-style pipe tables. Both are ~5× faster than PDF (no rendering pipeline).
+
+**Known upstream quirk**: `rdocx-markdown` 0.1.2 emits headings as `**bold**` rather than ATX `# Heading`. Body content, lists, tables, and links render correctly. Tracked in [`research/04-found-issues/`](../../research/04-found-issues/).
+
+### `convertTo(module, docx, format)` — generic dispatcher
+
+When the output format is determined at runtime (e.g. from a query parameter):
+
+```ts
+import { convertTo, type OutputFormat } from "docx-to-pdf-wasm";
+
+const format = (new URL(req.url)).searchParams.get("format") ?? "pdf";
+const bytes = await convertTo(wasmModule, docxBytes, format as OutputFormat);
+```
+
+### `*WithInstance(instance, docx)` — advanced
 
 ```ts
 const instance = await instantiate(wasmModule);
-const pdf = convertWithInstance(instance, docxBytes);
+const pdf  = convertWithInstance(instance, docxBytes);          // Uint8Array
+const html = convertHtmlWithInstance(instance, docxBytes);      // string
+const md   = convertMarkdownWithInstance(instance, docxBytes);  // string
 ```
 
 Synchronous after instantiation. Reuses one instance across calls — faster, but a single trap leaves the instance unusable for subsequent conversions. Only use if you have a specific reason to manage instance lifetimes yourself.

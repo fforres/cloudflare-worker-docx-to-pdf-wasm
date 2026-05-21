@@ -1,0 +1,1357 @@
+{
+  "target": "http://127.0.0.1:8793",
+  "timestamp": "2026-05-20T20:23:37.997Z",
+  "corpus_size": 50,
+  "memory_pids": [
+    46267,
+    46550
+  ],
+  "memory_overall": {
+    "samples": 65,
+    "min_mb": 98.8,
+    "p50_mb": 562.7,
+    "p95_mb": 1133.5,
+    "max_mb": 1140.6,
+    "mean_mb": 678.5
+  },
+  "phases": {
+    "warmup": {
+      "name": "phase 1: warmup (5x small doc, discarded)",
+      "wallclock_ms": 56.18,
+      "throughput_rps": 0,
+      "errors_count": 0,
+      "errors_sample": [],
+      "memory": {
+        "samples": 2,
+        "min_mb": 98.8,
+        "p50_mb": 205.8,
+        "p95_mb": 205.8,
+        "max_mb": 205.8,
+        "mean_mb": 152.3
+      },
+      "count": 0,
+      "extra": null
+    },
+    "corpus_sweep": {
+      "name": "phase 2: corpus sweep (50 docs × 3 formats sequential)",
+      "wallclock_ms": 6341.64,
+      "throughput_rps": 23.65,
+      "errors_count": 3,
+      "errors_sample": [
+        "tier3/deep-table-cell.docx (pdf): 500 Error: The Workers runtime canceled this request because it detected that your Worker's code had hung and would never generate a response. Refer to: https://developers.cloudflare.com/workers/observabi",
+        "tier3/deep-table-cell.docx (html): 500 Error: The Workers runtime canceled this request because it detected that your Worker's code had hung and would never generate a response. Refer to: https://developers.cloudflare.com/workers/observabi",
+        "tier3/deep-table-cell.docx (markdown): 500 Error: The Workers runtime canceled this request because it detected that your Worker's code had hung and would never generate a response. Refer to: https://developers.cloudflare.com/workers/observabi"
+      ],
+      "memory": {
+        "samples": 32,
+        "min_mb": 222.8,
+        "p50_mb": 620.8,
+        "p95_mb": 1109.5,
+        "max_mb": 1109.5,
+        "mean_mb": 589.8
+      },
+      "count": 150,
+      "min_ms": 1.18,
+      "p50_ms": 4.98,
+      "p95_ms": 86.57,
+      "p99_ms": 541.55,
+      "max_ms": 2701.41,
+      "mean_ms": 42.27,
+      "extra": null
+    },
+    "hot_sequential": {
+      "name": "phase 3: hot path (50x medium doc, sequential, PDF)",
+      "wallclock_ms": 1540.47,
+      "throughput_rps": 32.46,
+      "errors_count": 0,
+      "errors_sample": [],
+      "memory": {
+        "samples": 8,
+        "min_mb": 1110,
+        "p50_mb": 1114.6,
+        "p95_mb": 1118,
+        "max_mb": 1118,
+        "mean_mb": 1114.2
+      },
+      "count": 50,
+      "min_ms": 29.83,
+      "p50_ms": 30.71,
+      "p95_ms": 32.03,
+      "p99_ms": 33.39,
+      "max_ms": 33.39,
+      "mean_ms": 30.81,
+      "extra": null
+    },
+    "hot_concurrent_10": {
+      "name": "phase 4: concurrent 50 reqs c=10 (PDF, same doc)",
+      "wallclock_ms": 1476.77,
+      "throughput_rps": 33.86,
+      "errors_count": 0,
+      "errors_sample": [],
+      "memory": {
+        "samples": 9,
+        "min_mb": 519.7,
+        "p50_mb": 1127.8,
+        "p95_mb": 1140.6,
+        "max_mb": 1140.6,
+        "mean_mb": 929
+      },
+      "count": 50,
+      "min_ms": 44.22,
+      "p50_ms": 289.25,
+      "p95_ms": 306.16,
+      "p99_ms": 550.05,
+      "max_ms": 550.05,
+      "mean_ms": 280.42,
+      "extra": null
+    },
+    "hot_concurrent_25": {
+      "name": "phase 5: concurrent 50 reqs c=25 (PDF, same doc)",
+      "wallclock_ms": 1472.88,
+      "throughput_rps": 33.95,
+      "errors_count": 0,
+      "errors_sample": [],
+      "memory": {
+        "samples": 8,
+        "min_mb": 526,
+        "p50_mb": 538.9,
+        "p95_mb": 548.1,
+        "max_mb": 548.1,
+        "mean_mb": 537.5
+      },
+      "count": 50,
+      "min_ms": 57.47,
+      "p50_ms": 664.24,
+      "p95_ms": 778.56,
+      "p99_ms": 1415.21,
+      "max_ms": 1415.21,
+      "mean_ms": 615.41,
+      "extra": null
+    },
+    "mixed_concurrent_10": {
+      "name": "phase 6: mixed format concurrent (50 reqs PDF/HTML/MD at c=10)",
+      "wallclock_ms": 861.45,
+      "throughput_rps": 58.04,
+      "errors_count": 0,
+      "errors_sample": [],
+      "memory": {
+        "samples": 6,
+        "min_mb": 550.4,
+        "p50_mb": 562.7,
+        "p95_mb": 563.5,
+        "max_mb": 563.5,
+        "mean_mb": 558.3
+      },
+      "count": 50,
+      "min_ms": 46.04,
+      "p50_ms": 163.48,
+      "p95_ms": 201.27,
+      "p99_ms": 202.79,
+      "max_ms": 202.79,
+      "mean_ms": 163.59,
+      "extra": null
+    }
+  },
+  "corpus_detail": [
+    {
+      "doc": "tier1/block_quotes.docx",
+      "in_bytes": 12153,
+      "format": "pdf",
+      "status": 200,
+      "elapsed_ms": 6,
+      "out_bytes": 13706
+    },
+    {
+      "doc": "tier1/inline_formatting.docx",
+      "in_bytes": 20047,
+      "format": "pdf",
+      "status": 200,
+      "elapsed_ms": 3.99,
+      "out_bytes": 13218
+    },
+    {
+      "doc": "tier1/links.docx",
+      "in_bytes": 32356,
+      "format": "pdf",
+      "status": 200,
+      "elapsed_ms": 4.44,
+      "out_bytes": 9614
+    },
+    {
+      "doc": "tier1/lists.docx",
+      "in_bytes": 9473,
+      "format": "pdf",
+      "status": 200,
+      "elapsed_ms": 4.63,
+      "out_bytes": 11515
+    },
+    {
+      "doc": "tier1/test.docx",
+      "in_bytes": 31773,
+      "format": "pdf",
+      "status": 200,
+      "elapsed_ms": 3.99,
+      "out_bytes": 7461
+    },
+    {
+      "doc": "tier2/ComplexNumberedLists.docx",
+      "in_bytes": 14458,
+      "format": "pdf",
+      "status": 200,
+      "elapsed_ms": 3.3,
+      "out_bytes": 9148
+    },
+    {
+      "doc": "tier2/EmptyDocumentWithHeaderFooter.docx",
+      "in_bytes": 14549,
+      "format": "pdf",
+      "status": 200,
+      "elapsed_ms": 2.91,
+      "out_bytes": 2795
+    },
+    {
+      "doc": "tier2/SampleDoc.docx",
+      "in_bytes": 11611,
+      "format": "pdf",
+      "status": 200,
+      "elapsed_ms": 3.12,
+      "out_bytes": 9035
+    },
+    {
+      "doc": "tier2/SimpleHeadThreeColFoot.docx",
+      "in_bytes": 13112,
+      "format": "pdf",
+      "status": 200,
+      "elapsed_ms": 3.49,
+      "out_bytes": 8075
+    },
+    {
+      "doc": "tier2/Styles.docx",
+      "in_bytes": 10905,
+      "format": "pdf",
+      "status": 200,
+      "elapsed_ms": 2.51,
+      "out_bytes": 6468
+    },
+    {
+      "doc": "tier2/headers.docx",
+      "in_bytes": 18926,
+      "format": "pdf",
+      "status": 200,
+      "elapsed_ms": 4.12,
+      "out_bytes": 14478
+    },
+    {
+      "doc": "tier2/inline_images.docx",
+      "in_bytes": 14305,
+      "format": "pdf",
+      "status": 200,
+      "elapsed_ms": 3.21,
+      "out_bytes": 8456
+    },
+    {
+      "doc": "tier2/lists_level_override.docx",
+      "in_bytes": 16735,
+      "format": "pdf",
+      "status": 200,
+      "elapsed_ms": 4.11,
+      "out_bytes": 14170
+    },
+    {
+      "doc": "tier2/numbered_header.docx",
+      "in_bytes": 15467,
+      "format": "pdf",
+      "status": 200,
+      "elapsed_ms": 2.65,
+      "out_bytes": 5595
+    },
+    {
+      "doc": "tier2/tables.docx",
+      "in_bytes": 31751,
+      "format": "pdf",
+      "status": 200,
+      "elapsed_ms": 4.34,
+      "out_bytes": 9569
+    },
+    {
+      "doc": "tier3/TestTableColumns.docx",
+      "in_bytes": 12672,
+      "format": "pdf",
+      "status": 200,
+      "elapsed_ms": 2.53,
+      "out_bytes": 717
+    },
+    {
+      "doc": "tier3/deep-table-cell.docx",
+      "in_bytes": 17198,
+      "format": "pdf",
+      "status": 500,
+      "elapsed_ms": 14.6,
+      "out_bytes": 405
+    },
+    {
+      "doc": "tier3/drop_cap.docx",
+      "in_bytes": 15671,
+      "format": "pdf",
+      "status": 200,
+      "elapsed_ms": 4.43,
+      "out_bytes": 4325
+    },
+    {
+      "doc": "tier3/footnotes.docx",
+      "in_bytes": 12823,
+      "format": "pdf",
+      "status": 200,
+      "elapsed_ms": 2.81,
+      "out_bytes": 5714
+    },
+    {
+      "doc": "tier3/having-images.docx",
+      "in_bytes": 132875,
+      "format": "pdf",
+      "status": 200,
+      "elapsed_ms": 12.28,
+      "out_bytes": 190373
+    },
+    {
+      "doc": "tier3/image_with_textbox_caption.docx",
+      "in_bytes": 19882,
+      "format": "pdf",
+      "status": 200,
+      "elapsed_ms": 6.75,
+      "out_bytes": 5954
+    },
+    {
+      "doc": "tier3/notes.docx",
+      "in_bytes": 19056,
+      "format": "pdf",
+      "status": 200,
+      "elapsed_ms": 3.12,
+      "out_bytes": 8009
+    },
+    {
+      "doc": "tier3/table_header_rowspan.docx",
+      "in_bytes": 15826,
+      "format": "pdf",
+      "status": 200,
+      "elapsed_ms": 5.03,
+      "out_bytes": 9675
+    },
+    {
+      "doc": "tier3/textbox_image.docx",
+      "in_bytes": 40379,
+      "format": "pdf",
+      "status": 200,
+      "elapsed_ms": 6.96,
+      "out_bytes": 3909
+    },
+    {
+      "doc": "tier3/track_changes_insertion.docx",
+      "in_bytes": 12956,
+      "format": "pdf",
+      "status": 200,
+      "elapsed_ms": 2.21,
+      "out_bytes": 3652
+    },
+    {
+      "doc": "complex/cdc_hepatitis_eval.docx",
+      "in_bytes": 44886,
+      "format": "pdf",
+      "status": 200,
+      "elapsed_ms": 19.9,
+      "out_bytes": 51456
+    },
+    {
+      "doc": "complex/cdc_ngs_validation.docx",
+      "in_bytes": 686763,
+      "format": "pdf",
+      "status": 200,
+      "elapsed_ms": 35.35,
+      "out_bytes": 82251
+    },
+    {
+      "doc": "complex/cdc_ngs_validation_plan.docx",
+      "in_bytes": 712891,
+      "format": "pdf",
+      "status": 200,
+      "elapsed_ms": 48.15,
+      "out_bytes": 104480
+    },
+    {
+      "doc": "complex/edu_gatech_thesis.docx",
+      "in_bytes": 78957,
+      "format": "pdf",
+      "status": 200,
+      "elapsed_ms": 31.4,
+      "out_bytes": 81442
+    },
+    {
+      "doc": "complex/edu_latech_thesis.docx",
+      "in_bytes": 294961,
+      "format": "pdf",
+      "status": 200,
+      "elapsed_ms": 64.32,
+      "out_bytes": 151716
+    },
+    {
+      "doc": "complex/edu_mtu_thesis.docx",
+      "in_bytes": 918533,
+      "format": "pdf",
+      "status": 200,
+      "elapsed_ms": 94.42,
+      "out_bytes": 871121
+    },
+    {
+      "doc": "complex/edu_siu_thesis.docx",
+      "in_bytes": 33434,
+      "format": "pdf",
+      "status": 200,
+      "elapsed_ms": 12.72,
+      "out_bytes": 37391
+    },
+    {
+      "doc": "complex/edu_uiowa_thesis.docx",
+      "in_bytes": 79730,
+      "format": "pdf",
+      "status": 200,
+      "elapsed_ms": 30.84,
+      "out_bytes": 98212
+    },
+    {
+      "doc": "complex/epa_cprg_planning.docx",
+      "in_bytes": 45034,
+      "format": "pdf",
+      "status": 200,
+      "elapsed_ms": 11.43,
+      "out_bytes": 42613
+    },
+    {
+      "doc": "complex/epa_inception_workplan.docx",
+      "in_bytes": 213583,
+      "format": "pdf",
+      "status": 200,
+      "elapsed_ms": 14.52,
+      "out_bytes": 43269
+    },
+    {
+      "doc": "complex/epa_opcert_annual.docx",
+      "in_bytes": 260209,
+      "format": "pdf",
+      "status": 200,
+      "elapsed_ms": 52.98,
+      "out_bytes": 137486
+    },
+    {
+      "doc": "complex/epa_site_inspection.docx",
+      "in_bytes": 94059,
+      "format": "pdf",
+      "status": 200,
+      "elapsed_ms": 49.15,
+      "out_bytes": 113415
+    },
+    {
+      "doc": "complex/hhs_cybersec_toolkit.docx",
+      "in_bytes": 1124800,
+      "format": "pdf",
+      "status": 200,
+      "elapsed_ms": 172.58,
+      "out_bytes": 706496
+    },
+    {
+      "doc": "complex/nasa_business_plan.docx",
+      "in_bytes": 17416,
+      "format": "pdf",
+      "status": 200,
+      "elapsed_ms": 6.65,
+      "out_bytes": 20045
+    },
+    {
+      "doc": "complex/nasa_psd_final.docx",
+      "in_bytes": 34646,
+      "format": "pdf",
+      "status": 200,
+      "elapsed_ms": 9.93,
+      "out_bytes": 35071
+    },
+    {
+      "doc": "complex/nasa_report_bianco.docx",
+      "in_bytes": 1592880,
+      "format": "pdf",
+      "status": 200,
+      "elapsed_ms": 186.44,
+      "out_bytes": 1499787
+    },
+    {
+      "doc": "complex/nasa_sewp_rfp.docx",
+      "in_bytes": 455028,
+      "format": "pdf",
+      "status": 200,
+      "elapsed_ms": 539.46,
+      "out_bytes": 1397166
+    },
+    {
+      "doc": "complex/nist_manipulation.docx",
+      "in_bytes": 533314,
+      "format": "pdf",
+      "status": 200,
+      "elapsed_ms": 44.84,
+      "out_bytes": 553360
+    },
+    {
+      "doc": "complex/nist_sp800_53.docx",
+      "in_bytes": 2065388,
+      "format": "pdf",
+      "status": 200,
+      "elapsed_ms": 2701.41,
+      "out_bytes": 3675540
+    },
+    {
+      "doc": "complex/nist_ucd_report.docx",
+      "in_bytes": 42695,
+      "format": "pdf",
+      "status": 200,
+      "elapsed_ms": 16.36,
+      "out_bytes": 52467
+    },
+    {
+      "doc": "complex/un_humansec_proposal.docx",
+      "in_bytes": 71760,
+      "format": "pdf",
+      "status": 200,
+      "elapsed_ms": 64.46,
+      "out_bytes": 123882
+    },
+    {
+      "doc": "complex/un_seea_policy_brief.docx",
+      "in_bytes": 209852,
+      "format": "pdf",
+      "status": 200,
+      "elapsed_ms": 5.76,
+      "out_bytes": 12272
+    },
+    {
+      "doc": "complex/un_t15_project.docx",
+      "in_bytes": 128844,
+      "format": "pdf",
+      "status": 200,
+      "elapsed_ms": 86.57,
+      "out_bytes": 207813
+    },
+    {
+      "doc": "complex/un_ungegn_strategic.docx",
+      "in_bytes": 175959,
+      "format": "pdf",
+      "status": 200,
+      "elapsed_ms": 78.58,
+      "out_bytes": 275262
+    },
+    {
+      "doc": "complex/who_pqs_lab.docx",
+      "in_bytes": 56921,
+      "format": "pdf",
+      "status": 200,
+      "elapsed_ms": 30.86,
+      "out_bytes": 129122
+    },
+    {
+      "doc": "tier1/block_quotes.docx",
+      "in_bytes": 12153,
+      "format": "html",
+      "status": 200,
+      "elapsed_ms": 3.41,
+      "out_bytes": 1224
+    },
+    {
+      "doc": "tier1/inline_formatting.docx",
+      "in_bytes": 20047,
+      "format": "html",
+      "status": 200,
+      "elapsed_ms": 1.92,
+      "out_bytes": 1089
+    },
+    {
+      "doc": "tier1/links.docx",
+      "in_bytes": 32356,
+      "format": "html",
+      "status": 200,
+      "elapsed_ms": 2.08,
+      "out_bytes": 1035
+    },
+    {
+      "doc": "tier1/lists.docx",
+      "in_bytes": 9473,
+      "format": "html",
+      "status": 200,
+      "elapsed_ms": 2.32,
+      "out_bytes": 1016
+    },
+    {
+      "doc": "tier1/test.docx",
+      "in_bytes": 31773,
+      "format": "html",
+      "status": 200,
+      "elapsed_ms": 2.23,
+      "out_bytes": 720
+    },
+    {
+      "doc": "tier2/ComplexNumberedLists.docx",
+      "in_bytes": 14458,
+      "format": "html",
+      "status": 200,
+      "elapsed_ms": 1.93,
+      "out_bytes": 1101
+    },
+    {
+      "doc": "tier2/EmptyDocumentWithHeaderFooter.docx",
+      "in_bytes": 14549,
+      "format": "html",
+      "status": 200,
+      "elapsed_ms": 1.65,
+      "out_bytes": 656
+    },
+    {
+      "doc": "tier2/SampleDoc.docx",
+      "in_bytes": 11611,
+      "format": "html",
+      "status": 200,
+      "elapsed_ms": 1.78,
+      "out_bytes": 1078
+    },
+    {
+      "doc": "tier2/SimpleHeadThreeColFoot.docx",
+      "in_bytes": 13112,
+      "format": "html",
+      "status": 200,
+      "elapsed_ms": 2.08,
+      "out_bytes": 925
+    },
+    {
+      "doc": "tier2/Styles.docx",
+      "in_bytes": 10905,
+      "format": "html",
+      "status": 200,
+      "elapsed_ms": 1.48,
+      "out_bytes": 726
+    },
+    {
+      "doc": "tier2/headers.docx",
+      "in_bytes": 18926,
+      "format": "html",
+      "status": 200,
+      "elapsed_ms": 1.79,
+      "out_bytes": 1034
+    },
+    {
+      "doc": "tier2/inline_images.docx",
+      "in_bytes": 14305,
+      "format": "html",
+      "status": 200,
+      "elapsed_ms": 1.86,
+      "out_bytes": 5031
+    },
+    {
+      "doc": "tier2/lists_level_override.docx",
+      "in_bytes": 16735,
+      "format": "html",
+      "status": 200,
+      "elapsed_ms": 2.06,
+      "out_bytes": 3710
+    },
+    {
+      "doc": "tier2/numbered_header.docx",
+      "in_bytes": 15467,
+      "format": "html",
+      "status": 200,
+      "elapsed_ms": 2.04,
+      "out_bytes": 695
+    },
+    {
+      "doc": "tier2/tables.docx",
+      "in_bytes": 31751,
+      "format": "html",
+      "status": 200,
+      "elapsed_ms": 1.99,
+      "out_bytes": 1522
+    },
+    {
+      "doc": "tier3/TestTableColumns.docx",
+      "in_bytes": 12672,
+      "format": "html",
+      "status": 200,
+      "elapsed_ms": 1.57,
+      "out_bytes": 1040
+    },
+    {
+      "doc": "tier3/deep-table-cell.docx",
+      "in_bytes": 17198,
+      "format": "html",
+      "status": 500,
+      "elapsed_ms": 6.72,
+      "out_bytes": 405
+    },
+    {
+      "doc": "tier3/drop_cap.docx",
+      "in_bytes": 15671,
+      "format": "html",
+      "status": 200,
+      "elapsed_ms": 3.06,
+      "out_bytes": 939
+    },
+    {
+      "doc": "tier3/footnotes.docx",
+      "in_bytes": 12823,
+      "format": "html",
+      "status": 200,
+      "elapsed_ms": 1.95,
+      "out_bytes": 697
+    },
+    {
+      "doc": "tier3/having-images.docx",
+      "in_bytes": 132875,
+      "format": "html",
+      "status": 200,
+      "elapsed_ms": 6.53,
+      "out_bytes": 193673
+    },
+    {
+      "doc": "tier3/image_with_textbox_caption.docx",
+      "in_bytes": 19882,
+      "format": "html",
+      "status": 200,
+      "elapsed_ms": 3.69,
+      "out_bytes": 836
+    },
+    {
+      "doc": "tier3/notes.docx",
+      "in_bytes": 19056,
+      "format": "html",
+      "status": 200,
+      "elapsed_ms": 1.78,
+      "out_bytes": 712
+    },
+    {
+      "doc": "tier3/table_header_rowspan.docx",
+      "in_bytes": 15826,
+      "format": "html",
+      "status": 200,
+      "elapsed_ms": 3.06,
+      "out_bytes": 6503
+    },
+    {
+      "doc": "tier3/textbox_image.docx",
+      "in_bytes": 40379,
+      "format": "html",
+      "status": 200,
+      "elapsed_ms": 5.83,
+      "out_bytes": 4593
+    },
+    {
+      "doc": "tier3/track_changes_insertion.docx",
+      "in_bytes": 12956,
+      "format": "html",
+      "status": 200,
+      "elapsed_ms": 1.97,
+      "out_bytes": 695
+    },
+    {
+      "doc": "complex/cdc_hepatitis_eval.docx",
+      "in_bytes": 44886,
+      "format": "html",
+      "status": 200,
+      "elapsed_ms": 4.14,
+      "out_bytes": 20742
+    },
+    {
+      "doc": "complex/cdc_ngs_validation.docx",
+      "in_bytes": 686763,
+      "format": "html",
+      "status": 200,
+      "elapsed_ms": 13.7,
+      "out_bytes": 66147
+    },
+    {
+      "doc": "complex/cdc_ngs_validation_plan.docx",
+      "in_bytes": 712891,
+      "format": "html",
+      "status": 200,
+      "elapsed_ms": 18.69,
+      "out_bytes": 97332
+    },
+    {
+      "doc": "complex/edu_gatech_thesis.docx",
+      "in_bytes": 78957,
+      "format": "html",
+      "status": 200,
+      "elapsed_ms": 11.49,
+      "out_bytes": 34357
+    },
+    {
+      "doc": "complex/edu_latech_thesis.docx",
+      "in_bytes": 294961,
+      "format": "html",
+      "status": 200,
+      "elapsed_ms": 22.24,
+      "out_bytes": 61469
+    },
+    {
+      "doc": "complex/edu_mtu_thesis.docx",
+      "in_bytes": 918533,
+      "format": "html",
+      "status": 200,
+      "elapsed_ms": 31.69,
+      "out_bytes": 1184312
+    },
+    {
+      "doc": "complex/edu_siu_thesis.docx",
+      "in_bytes": 33434,
+      "format": "html",
+      "status": 200,
+      "elapsed_ms": 5.01,
+      "out_bytes": 35989
+    },
+    {
+      "doc": "complex/edu_uiowa_thesis.docx",
+      "in_bytes": 79730,
+      "format": "html",
+      "status": 200,
+      "elapsed_ms": 7.23,
+      "out_bytes": 63376
+    },
+    {
+      "doc": "complex/epa_cprg_planning.docx",
+      "in_bytes": 45034,
+      "format": "html",
+      "status": 200,
+      "elapsed_ms": 5.3,
+      "out_bytes": 26138
+    },
+    {
+      "doc": "complex/epa_inception_workplan.docx",
+      "in_bytes": 213583,
+      "format": "html",
+      "status": 200,
+      "elapsed_ms": 6.26,
+      "out_bytes": 88801
+    },
+    {
+      "doc": "complex/epa_opcert_annual.docx",
+      "in_bytes": 260209,
+      "format": "html",
+      "status": 200,
+      "elapsed_ms": 18.12,
+      "out_bytes": 58286
+    },
+    {
+      "doc": "complex/epa_site_inspection.docx",
+      "in_bytes": 94059,
+      "format": "html",
+      "status": 200,
+      "elapsed_ms": 12.48,
+      "out_bytes": 151612
+    },
+    {
+      "doc": "complex/hhs_cybersec_toolkit.docx",
+      "in_bytes": 1124800,
+      "format": "html",
+      "status": 200,
+      "elapsed_ms": 32.29,
+      "out_bytes": 1276858
+    },
+    {
+      "doc": "complex/nasa_business_plan.docx",
+      "in_bytes": 17416,
+      "format": "html",
+      "status": 200,
+      "elapsed_ms": 2.57,
+      "out_bytes": 9865
+    },
+    {
+      "doc": "complex/nasa_psd_final.docx",
+      "in_bytes": 34646,
+      "format": "html",
+      "status": 200,
+      "elapsed_ms": 4.57,
+      "out_bytes": 22485
+    },
+    {
+      "doc": "complex/nasa_report_bianco.docx",
+      "in_bytes": 1592880,
+      "format": "html",
+      "status": 200,
+      "elapsed_ms": 51.63,
+      "out_bytes": 2083522
+    },
+    {
+      "doc": "complex/nasa_sewp_rfp.docx",
+      "in_bytes": 455028,
+      "format": "html",
+      "status": 200,
+      "elapsed_ms": 63.29,
+      "out_bytes": 800205
+    },
+    {
+      "doc": "complex/nist_manipulation.docx",
+      "in_bytes": 533314,
+      "format": "html",
+      "status": 200,
+      "elapsed_ms": 18.48,
+      "out_bytes": 679900
+    },
+    {
+      "doc": "complex/nist_sp800_53.docx",
+      "in_bytes": 2065388,
+      "format": "html",
+      "status": 200,
+      "elapsed_ms": 541.55,
+      "out_bytes": 6144224
+    },
+    {
+      "doc": "complex/nist_ucd_report.docx",
+      "in_bytes": 42695,
+      "format": "html",
+      "status": 200,
+      "elapsed_ms": 5.63,
+      "out_bytes": 14678
+    },
+    {
+      "doc": "complex/un_humansec_proposal.docx",
+      "in_bytes": 71760,
+      "format": "html",
+      "status": 200,
+      "elapsed_ms": 14.08,
+      "out_bytes": 215504
+    },
+    {
+      "doc": "complex/un_seea_policy_brief.docx",
+      "in_bytes": 209852,
+      "format": "html",
+      "status": 200,
+      "elapsed_ms": 5.17,
+      "out_bytes": 1157
+    },
+    {
+      "doc": "complex/un_t15_project.docx",
+      "in_bytes": 128844,
+      "format": "html",
+      "status": 200,
+      "elapsed_ms": 24.2,
+      "out_bytes": 146445
+    },
+    {
+      "doc": "complex/un_ungegn_strategic.docx",
+      "in_bytes": 175959,
+      "format": "html",
+      "status": 200,
+      "elapsed_ms": 22.17,
+      "out_bytes": 146670
+    },
+    {
+      "doc": "complex/who_pqs_lab.docx",
+      "in_bytes": 56921,
+      "format": "html",
+      "status": 200,
+      "elapsed_ms": 7.71,
+      "out_bytes": 50317
+    },
+    {
+      "doc": "tier1/block_quotes.docx",
+      "in_bytes": 12153,
+      "format": "markdown",
+      "status": 200,
+      "elapsed_ms": 2.11,
+      "out_bytes": 460
+    },
+    {
+      "doc": "tier1/inline_formatting.docx",
+      "in_bytes": 20047,
+      "format": "markdown",
+      "status": 200,
+      "elapsed_ms": 2.41,
+      "out_bytes": 244
+    },
+    {
+      "doc": "tier1/links.docx",
+      "in_bytes": 32356,
+      "format": "markdown",
+      "status": 200,
+      "elapsed_ms": 1.81,
+      "out_bytes": 317
+    },
+    {
+      "doc": "tier1/lists.docx",
+      "in_bytes": 9473,
+      "format": "markdown",
+      "status": 200,
+      "elapsed_ms": 2.53,
+      "out_bytes": 154
+    },
+    {
+      "doc": "tier1/test.docx",
+      "in_bytes": 31773,
+      "format": "markdown",
+      "status": 200,
+      "elapsed_ms": 1.76,
+      "out_bytes": 52
+    },
+    {
+      "doc": "tier2/ComplexNumberedLists.docx",
+      "in_bytes": 14458,
+      "format": "markdown",
+      "status": 200,
+      "elapsed_ms": 1.72,
+      "out_bytes": 294
+    },
+    {
+      "doc": "tier2/EmptyDocumentWithHeaderFooter.docx",
+      "in_bytes": 14549,
+      "format": "markdown",
+      "status": 200,
+      "elapsed_ms": 1.4,
+      "out_bytes": 0
+    },
+    {
+      "doc": "tier2/SampleDoc.docx",
+      "in_bytes": 11611,
+      "format": "markdown",
+      "status": 200,
+      "elapsed_ms": 1.18,
+      "out_bytes": 153
+    },
+    {
+      "doc": "tier2/SimpleHeadThreeColFoot.docx",
+      "in_bytes": 13112,
+      "format": "markdown",
+      "status": 200,
+      "elapsed_ms": 1.34,
+      "out_bytes": 234
+    },
+    {
+      "doc": "tier2/Styles.docx",
+      "in_bytes": 10905,
+      "format": "markdown",
+      "status": 200,
+      "elapsed_ms": 1.19,
+      "out_bytes": 49
+    },
+    {
+      "doc": "tier2/headers.docx",
+      "in_bytes": 18926,
+      "format": "markdown",
+      "status": 200,
+      "elapsed_ms": 1.63,
+      "out_bytes": 315
+    },
+    {
+      "doc": "tier2/inline_images.docx",
+      "in_bytes": 14305,
+      "format": "markdown",
+      "status": 200,
+      "elapsed_ms": 1.48,
+      "out_bytes": 84
+    },
+    {
+      "doc": "tier2/lists_level_override.docx",
+      "in_bytes": 16735,
+      "format": "markdown",
+      "status": 200,
+      "elapsed_ms": 2.19,
+      "out_bytes": 914
+    },
+    {
+      "doc": "tier2/numbered_header.docx",
+      "in_bytes": 15467,
+      "format": "markdown",
+      "status": 200,
+      "elapsed_ms": 1.5,
+      "out_bytes": 22
+    },
+    {
+      "doc": "tier2/tables.docx",
+      "in_bytes": 31751,
+      "format": "markdown",
+      "status": 200,
+      "elapsed_ms": 1.63,
+      "out_bytes": 407
+    },
+    {
+      "doc": "tier3/TestTableColumns.docx",
+      "in_bytes": 12672,
+      "format": "markdown",
+      "status": 200,
+      "elapsed_ms": 1.79,
+      "out_bytes": 113
+    },
+    {
+      "doc": "tier3/deep-table-cell.docx",
+      "in_bytes": 17198,
+      "format": "markdown",
+      "status": 500,
+      "elapsed_ms": 7.32,
+      "out_bytes": 405
+    },
+    {
+      "doc": "tier3/drop_cap.docx",
+      "in_bytes": 15671,
+      "format": "markdown",
+      "status": 200,
+      "elapsed_ms": 2.19,
+      "out_bytes": 77
+    },
+    {
+      "doc": "tier3/footnotes.docx",
+      "in_bytes": 12823,
+      "format": "markdown",
+      "status": 200,
+      "elapsed_ms": 1.51,
+      "out_bytes": 35
+    },
+    {
+      "doc": "tier3/having-images.docx",
+      "in_bytes": 132875,
+      "format": "markdown",
+      "status": 200,
+      "elapsed_ms": 3.37,
+      "out_bytes": 5
+    },
+    {
+      "doc": "tier3/image_with_textbox_caption.docx",
+      "in_bytes": 19882,
+      "format": "markdown",
+      "status": 200,
+      "elapsed_ms": 3.37,
+      "out_bytes": 167
+    },
+    {
+      "doc": "tier3/notes.docx",
+      "in_bytes": 19056,
+      "format": "markdown",
+      "status": 200,
+      "elapsed_ms": 1.68,
+      "out_bytes": 45
+    },
+    {
+      "doc": "tier3/table_header_rowspan.docx",
+      "in_bytes": 15826,
+      "format": "markdown",
+      "status": 200,
+      "elapsed_ms": 2.35,
+      "out_bytes": 442
+    },
+    {
+      "doc": "tier3/textbox_image.docx",
+      "in_bytes": 40379,
+      "format": "markdown",
+      "status": 200,
+      "elapsed_ms": 5.45,
+      "out_bytes": 46
+    },
+    {
+      "doc": "tier3/track_changes_insertion.docx",
+      "in_bytes": 12956,
+      "format": "markdown",
+      "status": 200,
+      "elapsed_ms": 1.56,
+      "out_bytes": 33
+    },
+    {
+      "doc": "complex/cdc_hepatitis_eval.docx",
+      "in_bytes": 44886,
+      "format": "markdown",
+      "status": 200,
+      "elapsed_ms": 3.81,
+      "out_bytes": 12129
+    },
+    {
+      "doc": "complex/cdc_ngs_validation.docx",
+      "in_bytes": 686763,
+      "format": "markdown",
+      "status": 200,
+      "elapsed_ms": 12.84,
+      "out_bytes": 16849
+    },
+    {
+      "doc": "complex/cdc_ngs_validation_plan.docx",
+      "in_bytes": 712891,
+      "format": "markdown",
+      "status": 200,
+      "elapsed_ms": 16.93,
+      "out_bytes": 26128
+    },
+    {
+      "doc": "complex/edu_gatech_thesis.docx",
+      "in_bytes": 78957,
+      "format": "markdown",
+      "status": 200,
+      "elapsed_ms": 9.67,
+      "out_bytes": 17273
+    },
+    {
+      "doc": "complex/edu_latech_thesis.docx",
+      "in_bytes": 294961,
+      "format": "markdown",
+      "status": 200,
+      "elapsed_ms": 20.45,
+      "out_bytes": 38764
+    },
+    {
+      "doc": "complex/edu_mtu_thesis.docx",
+      "in_bytes": 918533,
+      "format": "markdown",
+      "status": 200,
+      "elapsed_ms": 6.82,
+      "out_bytes": 20859
+    },
+    {
+      "doc": "complex/edu_siu_thesis.docx",
+      "in_bytes": 33434,
+      "format": "markdown",
+      "status": 200,
+      "elapsed_ms": 3.91,
+      "out_bytes": 5172
+    },
+    {
+      "doc": "complex/edu_uiowa_thesis.docx",
+      "in_bytes": 79730,
+      "format": "markdown",
+      "status": 200,
+      "elapsed_ms": 4.72,
+      "out_bytes": 18773
+    },
+    {
+      "doc": "complex/epa_cprg_planning.docx",
+      "in_bytes": 45034,
+      "format": "markdown",
+      "status": 200,
+      "elapsed_ms": 4.04,
+      "out_bytes": 5300
+    },
+    {
+      "doc": "complex/epa_inception_workplan.docx",
+      "in_bytes": 213583,
+      "format": "markdown",
+      "status": 200,
+      "elapsed_ms": 3.91,
+      "out_bytes": 7506
+    },
+    {
+      "doc": "complex/epa_opcert_annual.docx",
+      "in_bytes": 260209,
+      "format": "markdown",
+      "status": 200,
+      "elapsed_ms": 16.97,
+      "out_bytes": 33743
+    },
+    {
+      "doc": "complex/epa_site_inspection.docx",
+      "in_bytes": 94059,
+      "format": "markdown",
+      "status": 200,
+      "elapsed_ms": 9.9,
+      "out_bytes": 36860
+    },
+    {
+      "doc": "complex/hhs_cybersec_toolkit.docx",
+      "in_bytes": 1124800,
+      "format": "markdown",
+      "status": 200,
+      "elapsed_ms": 6.04,
+      "out_bytes": 11341
+    },
+    {
+      "doc": "complex/nasa_business_plan.docx",
+      "in_bytes": 17416,
+      "format": "markdown",
+      "status": 200,
+      "elapsed_ms": 2.06,
+      "out_bytes": 2512
+    },
+    {
+      "doc": "complex/nasa_psd_final.docx",
+      "in_bytes": 34646,
+      "format": "markdown",
+      "status": 200,
+      "elapsed_ms": 2.86,
+      "out_bytes": 5848
+    },
+    {
+      "doc": "complex/nasa_report_bianco.docx",
+      "in_bytes": 1592880,
+      "format": "markdown",
+      "status": 200,
+      "elapsed_ms": 8.46,
+      "out_bytes": 31176
+    },
+    {
+      "doc": "complex/nasa_sewp_rfp.docx",
+      "in_bytes": 455028,
+      "format": "markdown",
+      "status": 200,
+      "elapsed_ms": 50.27,
+      "out_bytes": 518070
+    },
+    {
+      "doc": "complex/nist_manipulation.docx",
+      "in_bytes": 533314,
+      "format": "markdown",
+      "status": 200,
+      "elapsed_ms": 4.19,
+      "out_bytes": 5330
+    },
+    {
+      "doc": "complex/nist_sp800_53.docx",
+      "in_bytes": 2065388,
+      "format": "markdown",
+      "status": 200,
+      "elapsed_ms": 486.81,
+      "out_bytes": 1410463
+    },
+    {
+      "doc": "complex/nist_ucd_report.docx",
+      "in_bytes": 42695,
+      "format": "markdown",
+      "status": 200,
+      "elapsed_ms": 4.98,
+      "out_bytes": 8873
+    },
+    {
+      "doc": "complex/un_humansec_proposal.docx",
+      "in_bytes": 71760,
+      "format": "markdown",
+      "status": 200,
+      "elapsed_ms": 10.05,
+      "out_bytes": 29691
+    },
+    {
+      "doc": "complex/un_seea_policy_brief.docx",
+      "in_bytes": 209852,
+      "format": "markdown",
+      "status": 200,
+      "elapsed_ms": 5,
+      "out_bytes": 232
+    },
+    {
+      "doc": "complex/un_t15_project.docx",
+      "in_bytes": 128844,
+      "format": "markdown",
+      "status": 200,
+      "elapsed_ms": 20.13,
+      "out_bytes": 60031
+    },
+    {
+      "doc": "complex/un_ungegn_strategic.docx",
+      "in_bytes": 175959,
+      "format": "markdown",
+      "status": 200,
+      "elapsed_ms": 19.43,
+      "out_bytes": 67884
+    },
+    {
+      "doc": "complex/who_pqs_lab.docx",
+      "in_bytes": 56921,
+      "format": "markdown",
+      "status": 200,
+      "elapsed_ms": 6.85,
+      "out_bytes": 19179
+    }
+  ]
+}

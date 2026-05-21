@@ -1,19 +1,40 @@
 // Minimal Cloudflare Worker that consumes the `docx-to-pdf-wasm` package.
 //
-// `POST /convert` with a DOCX body returns the corresponding PDF.
+// Endpoints:
+//   GET  /  GET /health         → 200 text/plain banner
+//   POST /convert               → 200 application/pdf
+//   POST /convert/html          → 200 text/html; charset=utf-8
+//   POST /convert/markdown      → 200 text/markdown; charset=utf-8
+//   *                           → 404
 //
-// The package's `convert()` function instantiates a fresh WASM instance per
-// call. We keep the compiled `WebAssembly.Module` at module scope so the
-// expensive compilation happens once per isolate; instantiation itself is
-// cheap (~5 ms) and gives us trap-resilience: pathological inputs that trap
-// inside the converter can't poison the next request's memory.
+// Each /convert request instantiates a fresh WASM instance (trap resilience).
+// The compiled `WebAssembly.Module` stays at module scope so it's compiled
+// once per isolate; instantiation is cheap (~5 ms warm).
 
-import { convert, ConvertError } from "docx-to-pdf-wasm";
-// converter.wasm is copied into this directory by `scripts/copy-wasm.mjs`,
-// which runs automatically via `predev` / `predeploy` npm scripts. The copy
-// step is needed because wrangler's CompiledWasm loader rule globs are
-// resolved relative to this worker's source root, not the project root.
+import {
+  ConvertError,
+  convertToPdf,
+  convertToHtmlBytes,
+  convertToMarkdownBytes,
+} from "docx-to-pdf-wasm";
+// The .wasm is copied into this directory by `scripts/copy-wasm.mjs`
+// (predev / predeploy npm scripts).
 import wasmModule from "./converter.wasm";
+
+const ROUTES = {
+  "/convert": {
+    contentType: "application/pdf",
+    convert: convertToPdf,
+  },
+  "/convert/html": {
+    contentType: "text/html; charset=utf-8",
+    convert: convertToHtmlBytes,
+  },
+  "/convert/markdown": {
+    contentType: "text/markdown; charset=utf-8",
+    convert: convertToMarkdownBytes,
+  },
+};
 
 export default {
   async fetch(req) {
@@ -21,12 +42,20 @@ export default {
 
     if (url.pathname === "/" || url.pathname === "/health") {
       return new Response(
-        "docx-to-pdf-wasm — POST a .docx body to /convert\n",
-        { headers: { "content-type": "text/plain" } },
+        [
+          "docx-to-pdf-wasm",
+          "",
+          "POST /convert            DOCX body → PDF",
+          "POST /convert/html       DOCX body → HTML",
+          "POST /convert/markdown   DOCX body → Markdown",
+          "",
+        ].join("\n"),
+        { headers: { "content-type": "text/plain; charset=utf-8" } },
       );
     }
 
-    if (url.pathname !== "/convert") {
+    const route = ROUTES[url.pathname];
+    if (!route) {
       return new Response("Not found", { status: 404 });
     }
     if (req.method !== "POST") {
@@ -44,11 +73,11 @@ export default {
     }
 
     try {
-      const pdf = await convert(wasmModule, docx);
-      return new Response(pdf, {
+      const out = await route.convert(wasmModule, docx);
+      return new Response(out, {
         headers: {
-          "content-type": "application/pdf",
-          "content-length": String(pdf.length),
+          "content-type": route.contentType,
+          "content-length": String(out.length),
         },
       });
     } catch (e) {

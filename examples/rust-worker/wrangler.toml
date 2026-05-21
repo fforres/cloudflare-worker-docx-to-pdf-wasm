@@ -1,0 +1,15 @@
+name = "docx-to-pdf-rust-worker"
+# worker-build emits its JS shim at build/worker/shim.mjs alongside the
+# trimmed .wasm. Confirmed against worker-build 0.8.x.
+main = "build/worker/shim.mjs"
+compatibility_date = "2025-01-01"
+
+# Invoke worker-build for every wrangler dev / deploy.
+# --panic-unwind so trapped panics surface as JS exceptions instead of taking
+# down the isolate (the opt-8 crate also uses panic = "unwind").
+[build]
+command = "cargo install -q worker-build --version ^0.8 --locked && worker-build --release"
+
+# Mirror the JS worker's paid-plan CPU budget so long documents have headroom.
+[limits]
+cpu_ms = 30000
