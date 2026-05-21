@@ -216,7 +216,7 @@ document.querySelector("input[type=file]")!.addEventListener("change", async (e)
 |---|---|
 | Raw WASM (`cargo build --release --target wasm32-unknown-unknown`) | 2.57 MiB |
 | After `wasm-opt -Oz` | 2.23 MiB |
-| **Gzipped (what CF Workers sees on deploy)** | **1.03 MiB** |
+| **Gzipped (what CF Workers sees on deploy)** | **1.04 MiB** |
 | Brotli q11 | 0.79 MiB |
 
 The bundle contains:
@@ -251,7 +251,7 @@ For each, the converter returns a clear error rather than corrupted output. The 
 
 ## How it's built
 
-The WASM artifact in `build/docx-to-pdf.wasm` is compiled from Rust source at [`research/02-optimizations/opt-8-textbox-preprocessor-subset/converter/`](../../research/02-optimizations/opt-8-textbox-preprocessor-subset/converter/). To rebuild it:
+The WASM artifact in `build/docx-to-pdf.wasm` is compiled from Rust source at [`research/02-optimizations/opt-9a-multi-format/converter/`](../../research/02-optimizations/opt-9a-multi-format/converter/) (opt-9a = opt-8 base + HTML/Markdown exports + the post-audit security hardening from [`research/06-security-audit/`](../../research/06-security-audit/)). To rebuild it:
 
 ```bash
 # From the repo root

@@ -3,6 +3,11 @@
   "version": "0.1.0",
   "description": "DOCX-to-PDF conversion compiled to WebAssembly. Runtime-agnostic — runs on Cloudflare Workers, Node.js, Bun, Deno, and modern browsers.",
   "license": "MIT",
+  "author": "@fforres",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fforres/cloudflare-worker-docx-to-pdf-wasm"
+  },
   "type": "module",
   "main": "./build/index.js",
   "module": "./build/index.js",
