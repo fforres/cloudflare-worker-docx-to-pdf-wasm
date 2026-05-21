@@ -15,6 +15,11 @@ use approach_c_rdocx_opt9a::{
 };
 use worker::*;
 
+/// Defense-in-depth body-size cap. The converter has its own
+/// `MAX_INPUT_BYTES = 32 MiB` guard; this layer rejects before bytes ever
+/// reach the WASM-side allocator.
+const MAX_BODY_BYTES: usize = 32 * 1024 * 1024;
+
 const BANNER: &str = "\
 docx-to-pdf-rust-worker
 
@@ -59,12 +64,30 @@ fn parse_convert_path(path: &str) -> Option<Format> {
 }
 
 async fn handle_convert(req: &mut Request, format: Format) -> Result<Response> {
+    // Fast-reject based on Content-Length when the client sends one.
+    if let Some(declared) = req.headers().get("content-length")?
+        .and_then(|s| s.parse::<usize>().ok())
+    {
+        if declared > MAX_BODY_BYTES {
+            return text(
+                &format!("payload too large ({} > {})", declared, MAX_BODY_BYTES),
+                413,
+            );
+        }
+    }
+
     let docx = match req.bytes().await {
         Ok(b) => b,
         Err(e) => return text(&format!("read body: {e}"), 400),
     };
     if docx.is_empty() {
         return text("empty body", 400);
+    }
+    if docx.len() > MAX_BODY_BYTES {
+        return text(
+            &format!("payload too large ({} > {})", docx.len(), MAX_BODY_BYTES),
+            413,
+        );
     }
 
     let (result, content_type) = match format {
