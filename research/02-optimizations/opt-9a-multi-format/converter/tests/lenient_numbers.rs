@@ -129,3 +129,10 @@ fn decimal_grid_span_converts() {
         r#"<w:tbl><w:tblGrid><w:gridCol w:w="1000"/></w:tblGrid><w:tr><w:tc><w:tcPr><w:gridSpan w:val="1.0"/></w:tcPr><w:p><w:r><w:t>a</w:t></w:r></w:p></w:tc></w:tr></w:tbl>"#,
     );
 }
+
+#[test]
+fn decimal_cell_margins_and_float_noise_line_spacing_convert() {
+    assert_converts(
+        r#"<w:tbl><w:tblPr><w:tblW w:w="9360.0" w:type="dxa"/><w:tblCellMar><w:top w:w="80.0" w:type="dxa"/><w:left w:w="110.0" w:type="dxa"/><w:bottom w:w="80.0" w:type="dxa"/><w:right w:w="110.0" w:type="dxa"/></w:tblCellMar></w:tblPr><w:tblGrid><w:gridCol w:w="9360"/></w:tblGrid><w:tr><w:tc><w:p><w:pPr><w:spacing w:line="252.00000000000003" w:lineRule="auto"/></w:pPr><w:r><w:t>a</w:t></w:r></w:p></w:tc></w:tr></w:tbl>"#,
+    );
+}

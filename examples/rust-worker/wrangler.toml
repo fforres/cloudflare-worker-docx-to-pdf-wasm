@@ -12,7 +12,7 @@ compatibility_date = "2025-01-01"
 # workers-rs's #[event(fetch)] macro into a JS exception at the isolate
 # boundary, so the isolate stays healthy across requests.
 [build]
-command = "cargo install -q worker-build --version ^0.8 --locked && worker-build --release"
+command = "cargo install -q worker-build --version =0.8.3 --locked && worker-build --release"
 
 # Mirror the JS worker's paid-plan CPU budget so long documents have headroom.
 [limits]
