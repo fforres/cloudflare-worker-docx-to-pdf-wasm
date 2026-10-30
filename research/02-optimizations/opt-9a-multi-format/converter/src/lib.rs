@@ -24,6 +24,7 @@
 //!   `Layout` instead of `Vec::from_raw_parts`, eliminating the latent UB
 //!   that lived in opt-9a and earlier.
 
+mod lenient_numbers;
 mod preprocess;
 
 use std::alloc::{alloc as raw_alloc, dealloc as raw_dealloc, Layout};
