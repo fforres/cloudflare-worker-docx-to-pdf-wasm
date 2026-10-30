@@ -8,7 +8,9 @@
 //! numbers (percentages, `auto`, unit suffixes) have the attribute removed so
 //! the reader falls back to its default for that property.
 
+use quick_xml::events::attributes::Attribute;
 use quick_xml::events::{BytesStart, Event};
+use quick_xml::name::QName;
 use quick_xml::{Reader, Writer};
 
 #[derive(Clone, Copy, PartialEq)]
@@ -121,7 +123,10 @@ fn rewrite_tag(tag: &BytesStart) -> Option<BytesStart<'static>> {
         let raw = String::from_utf8_lossy(&attr.value).into_owned();
         let key_owned = String::from_utf8_lossy(key).into_owned();
         match sign.map(|s| fix_value(&raw, s)) {
-            None | Some(Fix::Keep) => out.push_attribute((key_owned.as_str(), raw.as_str())),
+            None | Some(Fix::Keep) => out.push_attribute(Attribute {
+                key: QName(key),
+                value: attr.value.clone(),
+            }),
             Some(Fix::Replace(v)) => {
                 changed = true;
                 out.push_attribute((key_owned.as_str(), v.as_str()));
@@ -183,6 +188,14 @@ mod tests {
         assert_eq!(
             run(r#"<w:position w:val="-2.5"/>"#),
             r#"<w:position w:val="-3"/>"#
+        );
+    }
+
+    #[test]
+    fn keeps_entities_in_rewritten_tags_escaped_once() {
+        assert_eq!(
+            run(r#"<w:sz w:val="21.5" w:name="a &amp; b &lt;c&gt;"/>"#),
+            r#"<w:sz w:val="22" w:name="a &amp; b &lt;c&gt;"/>"#
         );
     }
 
