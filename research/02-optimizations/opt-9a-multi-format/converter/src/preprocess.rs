@@ -136,6 +136,16 @@ fn try_preprocess(docx_bytes: &[u8]) -> Result<Vec<u8>, PreprocessError> {
         None => return Err(PreprocessError::Soft("word/document.xml missing".into())),
     };
 
+    let mut numbers_normalized = false;
+    for (name, data, _) in entries.iter_mut() {
+        if name.starts_with("word/") && name.ends_with(".xml") {
+            if let Some(fixed) = crate::lenient_numbers::normalize_numeric_attributes(data) {
+                *data = fixed;
+                numbers_normalized = true;
+            }
+        }
+    }
+
     let original_xml = &entries[doc_idx].1;
 
     // Depth-budget pre-check: catches deeply-nested-XML attacks against
@@ -151,11 +161,13 @@ fn try_preprocess(docx_bytes: &[u8]) -> Result<Vec<u8>, PreprocessError> {
 
     // If we produced something with no detected textboxes, just return the
     // original DOCX bytes — no point re-zipping for nothing.
-    if rewritten.lifted_count == 0 {
+    if rewritten.lifted_count == 0 && !numbers_normalized {
         return Ok(docx_bytes.to_vec());
     }
 
-    entries[doc_idx].1 = rewritten.xml;
+    if rewritten.lifted_count > 0 {
+        entries[doc_idx].1 = rewritten.xml;
+    }
 
     // Re-zip.
     let mut out = Cursor::new(Vec::with_capacity(docx_bytes.len()));
